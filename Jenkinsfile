@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('pull project') {
             steps {
-                 git branch: 'main', credentialsId: 'key_github', url: 'https://github.com/ponengine/serviceprofile.git'
+                 git branch: 'main', credentialsId: 'key_github', url: 'https://github.com/ponengine/serviceauthen.git'
             }
         }
         stage('install'){
