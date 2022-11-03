@@ -1,0 +1,13 @@
+package th.co.serviceauthen;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ServiceauthenApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ServiceauthenApplication.class, args);
+	}
+
+}
