@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment{
+        registry = "ponengine/service-authen"
+        img = "$registry"+":${env.BUILD_ID}"
+        registryCredential = 'docker-hub-login'
+    }
     stages {
         stage('pull project') {
             steps {
@@ -13,8 +18,22 @@ pipeline {
         }
         stage('build image'){
             steps{
-                sh 'docker build --rm -t serviceprofile .'
-                sh 'docker run -d -p 8082:8082 serviceprofile'
+                echo "Building our image"
+                script{
+                    dockerImg = docker.build("${img}")
+                }
+                //sh 'docker build  -t serviceprofile .'
+                //sh 'docker run --rm -d -p 8082:8082 serviceprofile'
+            }
+        }
+        stage('Release'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-hub-login') {
+                        dockerImg.push();
+                        dockerImg.push('latest');
+                    }
+                }
             }
         }
     }
